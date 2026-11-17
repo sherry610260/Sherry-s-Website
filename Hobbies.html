@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherry's Website - 興趣專長</title>
+    <!-- 引入手寫風與質感英文字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f7f3ee;
+            color: #554a43;
+            line-height: 1.8;
+        }
+
+                /* 1. 頂部導覽列 */
+        header {
+            background-color: #b5a494;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            font-size: 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        nav li.active {
+            font-weight: bold;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 3px;
+        }
+
+        nav li span.divider {
+            margin-left: 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 2. 主視覺橫幅 (Hero Banner) */
+        .banner {
+            background: linear-gradient(rgba(247, 243, 238, 0.4), rgba(247, 243, 238, 0.9)),
+                        url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80') center/cover;
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .banner-quote {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #8c7b6d;
+            margin-bottom: 10px;
+        }
+
+        .banner h1 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 38px;
+            letter-spacing: 4px;
+            color: #3b322c;
+            margin-bottom: 5px;
+        }
+
+        .banner h2 {
+            font-size: 14px;
+            letter-spacing: 5px;
+            color: #7b6d61;
+            font-weight: normal;
+            margin-bottom: 12px;
+        }
+
+        .banner p {
+            font-size: 16px;
+            color: #6d6055;
+            letter-spacing: 1px;
+        }
+
+        /* 3. 興趣內容卡片區 */
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .hobby-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+
+        /* 拍立得相片風格 */
+        .card-img-wrapper {
+            background-color: #ffffff;
+            padding: 10px 10px 18px 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .card-img-wrapper img {
+            width: 250px;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            border-radius: 2px;
+        }
+
+        /* 文字內容排版 */
+        .card-content {
+            flex: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #ebdcd0;
+            padding-bottom: 10px;
+        }
+
+        .title-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            background-color: #b58d7c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        .title-text h3 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 24px;
+            color: #3b322c;
+            line-height: 1.2;
+        }
+
+        .title-text span {
+            font-family: 'Caveat', cursive;
+            font-size: 18px;
+            color: #8c7b6d;
+        }
+
+        .badge {
+            background-color: #eee7df;
+            color: #6e5f53;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .slogan {
+            font-weight: 500;
+            color: #a06b52;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .desc {
+            font-size: 14.5px;
+            color: #665b53;
+            text-align: justify;
+        }
+
+        /* 右下角手寫小字 */
+        .handwritten {
+            position: absolute;
+            right: 25px;
+            bottom: 15px;
+            font-family: 'Caveat', cursive;
+            font-size: 20px;
+            color: #ab9585;
+            text-align: right;
+            line-height: 1.1;
+        }
+
+        /* 4. 底部頁尾與回首頁按鈕 */
+        footer {
+            text-align: center;
+            padding: 40px 20px 50px;
+            background-color: #eee7df;
+            margin-top: 50px;
+        }
+
+        footer .quote-en {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #7b6d61;
+            margin-bottom: 4px;
+        }
+
+        footer .quote-zh {
+            font-size: 14px;
+            color: #7b6d61;
+            margin-bottom: 25px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #554a43;
+            padding: 10px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: background-color 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background-color: #f7f3ee;
+        }
+
+        /* 手機版適應 (簡單的 RWD) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hobby-card {
+                flex-direction: column;
+                text-align: left;
+            }
+            .card-img-wrapper img {
+                width: 100%;
+                height: 200px;
+            }
+            .handwritten {
+                position: static;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <header>
+        <div class="logo">♥ Sherry's Website</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">首頁</a><span class="divider">|</span></li>
+                <li><a href="Resume.html">個人履歷</a><span class="divider">|</span></li>
+                <li class="active"><a href="Hobbies.html">興趣專長</a><span class="divider">|</span></li>
+                <li><a href="Activities.html">校園活動</a><span class="divider">|</span></li>
+                <li><a href="Travel.html">旅遊紀錄</a><span class="divider">|</span></li>
+                <li><a href="Dreamlist.html">夢想清單</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主視覺橫幅 -->
+    <section class="banner">
+        <div class="banner-quote">Do what you love and be yourself. ♡</div>
+        <h1>我的興趣</h1>
+        <h2>MY HOBBIES</h2>
+        <p></p>
+    </section>
+
+    <!-- 興趣專長主體區 -->
+    <main class="container">
+
+        <!-- 1. 吉他卡片 -->
+        <article class="hobby-card">
+            <div class="card-img-wrapper">
+                <img src="images/guitar.jpg" alt="吉他表演照片">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle">🎸</div>
+                        <div class="title-text">
+                            <h3>吉他</h3>
+                            <span>Guitar</span>
+                        </div>
+                    </div>
+                    <span class="badge">
+						<a href="https://youtube.com/shorts/WM_p1UA9hHQ?feature=share" target="_blank" style="color: #6e5f53; text-decoration: none;">🎵 點擊觀看我的cover</a>
+					</span>
+                </div>
+                <p class="slogan">「一把吉他，讓我看見更大的世界。」</p>
+                <p class="desc">
+                    高中時，從0到1，一開始的吉他菜鳥到成為吉他社社長，體驗許多的第一次，像是上台演出、參加音樂祭徵選等經歷，讓我跨出舒適圈。另外，彈奏吉他時，能讓我暫時放下壓力，沉澱心情，也讓我學會耐心與堅持。音樂對我來說，不只是興趣，更是生活中不可或缺的陪伴。
+                </p>
+            </div>
+            <div class="handwritten">Music makes life<br>better ♡</div>
+        </article>
+
+        <!-- 2. 烘焙卡片 -->
+        <article class="hobby-card">
+            <div class="card-img-wrapper">
+                <img src="images/baking.jpg" alt="我的蛋糕成品">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle" style="background-color: #b8866d;">🧁</div>
+                        <div class="title-text">
+                            <h3>烘焙</h3>
+                            <span>Baking</span>
+                        </div>
+                    </div>
+                    <span class="badge">👩‍🍳</span>
+                </div>
+                <p class="slogan">「用雙手，玩出新花樣」</p>
+                <p class="desc">
+                    從小總在廚房黏著阿嬤，一邊觀摩一邊等著好吃的飯菜上桌，讓我漸漸愛上烘焙。從餅乾到蛋糕，也嘗試不同的甜點。每一次的製作，都是新的挑戰，製作過程非常舒壓療癒，看到成品出爐和家人朋友品嘗時的模樣，帶給我滿滿的幸福和成就感。
+                </p>
+            </div>
+            <div class="handwritten">Sweet moments<br>♡</div>
+        </article>
+
+        <!-- 3. 攝影卡片 -->
+        <article class="hobby-card">
+            <div class="card-img-wrapper">
+                <img src="images/photography.jpg" alt="我與相機">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle" style="background-color: #7d8b82;">📷</div>
+                        <div class="title-text">
+                            <h3>攝影</h3>
+                            <span>Photography</span>
+                        </div>
+                    </div>
+                    <span class="badge">📸</span>
+                </div>
+                <p class="slogan">「用鏡頭，記錄生活中的美好。」</p>
+                <p class="desc">
+                    攝影讓我學會用不同的角度看世界，發現平凡中的不平凡。我喜歡拍下自然風景、日常生活、以及旅行中的瞬間，每張照片都乘載著獨一無二的回憶，記錄生活中那些美好的點點滴滴。
+            </div>
+            <div class="handwritten">Capture the<br>good things ♡</div>
+        </article>
+
+    </main>
+
+    <!-- 底部資訊 -->
+    <footer>
+        <div class="quote-en">Life is better when you do what you love.</div>
+        <a href="#" class="back-home-btn">⌂ 返回頂部</a>
+    </footer>
+
+</body>
+</html>

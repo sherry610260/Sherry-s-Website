@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherry's Website - 夢想清單</title>
+    <!-- 引入手寫風與襯線英文字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', Arial, sans-serif;
+            background-color: #f7f3ee;
+            color: #554a43;
+            line-height: 1.8;
+        }
+
+        /* 1. 頂部導覽列 */
+        header {
+            background-color: #b5a494;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            font-size: 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        nav li.active {
+            font-weight: bold;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 3px;
+        }
+
+        nav li span.divider {
+            margin-left: 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 2. 主視覺橫幅 */
+        .banner {
+            background: linear-gradient(rgba(247, 243, 238, 0.45), rgba(247, 243, 238, 0.95)),
+                        url('https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=1200&q=80') center/cover;
+            text-align: center;
+            padding: 65px 20px 45px;
+        }
+
+        .banner-quote {
+            font-family: 'Caveat', cursive;
+            font-size: 25px;
+            color: #8c7b6d;
+            margin-bottom: 8px;
+        }
+
+        .banner h1 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 40px;
+            letter-spacing: 4px;
+            color: #3b322c;
+            margin-bottom: 6px;
+        }
+
+        .banner h2 {
+            font-size: 14px;
+            letter-spacing: 5px;
+            color: #7b6d61;
+            font-weight: normal;
+            margin-bottom: 12px;
+        }
+
+        .banner p {
+            font-size: 16px;
+            color: #6d6055;
+            letter-spacing: 1px;
+        }
+
+        /* 3. 夢想達成進度條看板 */
+        .progress-bar-card {
+            max-width: 950px;
+            margin: -20px auto 35px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid #eee1d5;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14.5px;
+            color: #7b6d61;
+        }
+
+        .progress-info span b {
+            color: #a06b52;
+            font-size: 18px;
+        }
+
+        .bar-container {
+            width: 100%;
+            height: 12px;
+            background-color: #f0e6dc;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 33%;
+            background: linear-gradient(90deg, #b58d7c, #dec1b0);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* 4. 主要卡片容器 */
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .dream-card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #ebdcd0;
+            position: relative;
+        }
+
+        /* 拍立得照片外框 */
+        .card-img-wrapper {
+            background-color: #ffffff;
+            padding: 10px 10px 18px 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .card-img-wrapper:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-img-wrapper img {
+            width: 260px;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-radius: 2px;
+        }
+
+        /* 文字內容排版 */
+        .card-content {
+            flex: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #ebdcd0;
+            padding-bottom: 10px;
+        }
+
+        .title-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            background-color: #b58d7c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .title-text h3 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 24px;
+            color: #3b322c;
+            line-height: 1.2;
+        }
+
+        .title-text span {
+            font-family: 'Caveat', cursive;
+            font-size: 19px;
+            color: #8c7b6d;
+        }
+
+        .badge {
+            background-color: #eee7df;
+            color: #6e5f53;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .slogan {
+            font-weight: 500;
+            color: #a06b52;
+            margin-bottom: 8px;
+            font-size: 15.5px;
+        }
+
+        .desc {
+            font-size: 14.5px;
+            color: #665b53;
+            text-align: justify;
+            margin-bottom: 14px;
+            line-height: 1.75;
+        }
+
+        /* 互動小打勾目標清單 */
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-color: #faf7f2;
+            padding: 12px 18px;
+            border-radius: 8px;
+        }
+
+        .checklist li {
+            font-size: 13.5px;
+            color: #615349;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checklist input[type="checkbox"] {
+            accent-color: #b58d7c;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checklist li.completed {
+            text-decoration: line-through;
+            color: #a89a90;
+        }
+
+        /* 右下角手寫小字 */
+        .handwritten {
+            position: absolute;
+            right: 25px;
+            bottom: 15px;
+            font-family: 'Caveat', cursive;
+            font-size: 21px;
+            color: #ab9585;
+            text-align: right;
+            line-height: 1.1;
+        }
+
+        /* 5. 激勵小語 Memo 區 */
+        .quote-banner {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px 30px;
+            text-align: center;
+            border: 1px dashed #decbc0;
+            margin-top: 10px;
+        }
+
+        .quote-banner h4 {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            color: #a06b52;
+            margin-bottom: 6px;
+        }
+
+        .quote-banner p {
+            font-size: 14.5px;
+            color: #7b6d61;
+        }
+
+        /* 6. 頁尾 */
+        footer {
+            text-align: center;
+            padding: 40px 20px 50px;
+            background-color: #eee7df;
+            margin-top: 50px;
+        }
+
+        footer .quote-en {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #7b6d61;
+            margin-bottom: 4px;
+        }
+
+        footer .quote-zh {
+            font-size: 14px;
+            color: #7b6d61;
+            margin-bottom: 25px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #554a43;
+            padding: 10px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: background-color 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background-color: #f7f3ee;
+        }
+
+        /* RWD 適應手機版 */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .dream-card {
+                flex-direction: column;
+                text-align: left;
+            }
+            .card-img-wrapper img {
+                width: 100%;
+                height: 200px;
+            }
+            .handwritten {
+                position: static;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <header>
+        <div class="logo">♥ Sherry's Website</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">首頁</a><span class="divider">|</span></li>
+                <li><a href="Resume.html">個人履歷</a><span class="divider">|</span></li>
+                <li><a href="Hobbies.html">興趣專長</a><span class="divider">|</span></li>
+                <li><a href="Activities.html">校園活動</a><span class="divider">|</span></li>
+                <li><a href="Travel.html">旅遊紀錄</a><span class="divider">|</span></li>
+                <li class="active"><a href="DreamList.html">夢想清單</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主視覺橫幅 -->
+    <section class="banner">
+        <div class="banner-quote">Believe in your dreams, step by step. ♡</div>
+        <h1>夢想清單</h1>
+        <h2>MY BUCKET LIST</h2>
+        <p></p>
+    </section>
+
+    <!-- 達成進度看板 -->
+    <section class="progress-bar-card">
+        <div class="progress-info">
+            <span>🎯 願望清單達成進度：<b id="progressPercent">33%</b></span>
+            <span>點擊下方核取方塊即可即時更新進度！</span>
+        </div>
+        <div class="bar-container">
+            <div class="bar-fill" id="progressBar"></div>
+        </div>
+    </section>
+
+    <!-- 夢想清單卡片區 -->
+    <main class="container">
+
+        <!-- 1. 精進專業能力 -->
+        <article class="dream-card">
+            <div class="card-img-wrapper">
+                <img src="images/dream_study.jpg" alt="精進專業能力" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle">💻</div>
+                        <div class="title-text">
+                            <h3>精進專業能力</h3>
+                            <span>Professional Growth</span>
+                        </div>
+                    </div>
+                    <span class="badge">🚀 進行中</span>
+                </div>
+                <p class="slogan">「扎實沉澱專業，用技術創造價值。」</p>
+                <p class="desc">
+                    在資訊管理領域持續累積實力，不只掌握課堂理論，更希望透過獨立完成前後端專案、深入學習資料分析或雲端技術。期許自己能考取相關專業認證，並在大學期間參與專題競賽或企業實習，把所學轉化為解決真實世界問題的能力。
+                </p>
+                <ul class="checklist">
+                    <li><label><input type="checkbox" checked onchange="updateProgress()"> 課堂程式專題實作與自主開發練習</label></li>
+                    <li><label><input type="checkbox" onchange="updateProgress()"> 考取專業資訊與外語檢定證照</label></li>
+                    <li><label><input type="checkbox" onchange="updateProgress()"> 爭取企業實習機會並完成代表性專案</label></li>
+                </ul>
+            </div>
+            <div class="handwritten">Keep coding &<br>growing ♡</div>
+        </article>
+
+        <!-- 2. 爭取國際交換 -->
+        <article class="dream-card">
+            <div class="card-img-wrapper">
+                <img src="images/dream_exchange.jpg" alt="國際交換學生" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle" style="background-color: #7d8b82;">✈️</div>
+                        <div class="title-text">
+                            <h3>爭取國際交換</h3>
+                            <span>Exchange Student</span>
+                        </div>
+                    </div>
+                    <span class="badge">🌍 規劃準備中</span>
+                </div>
+                <p class="slogan">「走出舒適圈，看見世界廣闊的模樣。」</p>
+                <p class="desc">
+                    一直以來都渴望能以交換學生的身分到國外生活與學習一個學期。這不僅是為了提升外語溝通流利度，更想深刻體驗多元文化的碰撞，學習在異國獨立解決問題、結交來自世界各地的好友，用更寬廣的國際視野豐富人生履歷。
+                </p>
+                <ul class="checklist">
+                    <li><label><input type="checkbox" onchange="updateProgress()"> 提升外語檢定成績達到交換門檻</label></li>
+                    <li><label><input type="checkbox" onchange="updateProgress()"> 準備交換自傳、讀書計畫與作品集</label></li>
+                    <li><label><input type="checkbox" onchange="updateProgress()"> 順利出發交換，在異國自主生活一學期</label></li>
+                </ul>
+            </div>
+            <div class="handwritten">Wander &<br>learn ♡</div>
+        </article>
+
+        <!-- 3. 學習咖啡烘焙與拉花技巧 -->
+        <article class="dream-card">
+            <div class="card-img-wrapper">
+                <img src="images/dream_coffee.jpg" alt="咖啡烘焙與拉花" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle" style="background-color: #b8866d;">☕</div>
+                        <div class="title-text">
+                            <h3>咖啡烘焙與拉花</h3>
+                            <span>Coffee Roasting & Latte Art</span>
+                        </div>
+                    </div>
+                    <span class="badge">🌿 興趣進階</span>
+                </div>
+                <p class="slogan">「在香氣氤氳中，萃取生活的儀式感。」</p>
+                <p class="desc">
+                    熱愛烘焙與手作的我，也深深著迷於咖啡的溫暖魔力。希望有朝一日能學習認識不同產區的咖啡豆，掌握生豆烘焙的火候曲線，並親手打出細緻綿密的奶泡，練習拉出優雅的心型與葉脈天鵝拉花。親手為親朋好友端上一杯色香味俱全的手作拿鐵！
+                </p>
+                <ul class="checklist">
+                    <li><label><input type="checkbox" onchange="updateProgress()"> 認識各國精品咖啡豆種與手沖風味</label></li>
+                    <li><label><input type="checkbox" onchange="updateProgress()"> 參加咖啡拉花體驗課程，練成愛心與鬱金香</label></li>
+                    <li><label><input type="checkbox" onchange="updateProgress()"> 掌握小型生豆烘焙技巧，烘出專屬配方豆</label></li>
+                </ul>
+            </div>
+            <div class="handwritten">Coffee & sunshine<br>every day ♡</div>
+        </article>
+
+        <!-- 激勵小語 Memo -->
+        <div class="quote-banner">
+            <h4>"The future belongs to those who believe in the beauty of their dreams."</h4>
+        </div>
+
+    </main>
+
+    <!-- 底部資訊 -->
+    <footer>
+        <div class="quote-en">Life is better when you do what you love.</div>
+        <a href="#" class="back-home-btn">⌂ 返回頂部</a>
+    </footer>
+
+    <!-- 進度計算 JavaScript 腳本 -->
+    <script>
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            const total = checkboxes.length;
+            let checkedCount = 0;
+
+            checkboxes.forEach(cb => {
+                const li = cb.closest('li');
+                if (cb.checked) {
+                    checkedCount++;
+                    li.classList.add('completed');
+                } else {
+                    li.classList.remove('completed');
+                }
+            });
+
+            // 計算百分比
+            const percentage = Math.round((checkedCount / total) * 100);
+            
+            // 更新進度條寬度與文字
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressPercent').innerText = percentage + '%';
+        }
+
+        // 頁面載入時先執行一次計算
+        window.onload = updateProgress;
+    </script>
+</body>
+</html>

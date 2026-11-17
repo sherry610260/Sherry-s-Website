@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherry's Website - 首頁 Home</title>
+    <!-- 引入手寫風與襯線英文字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', Arial, sans-serif;
+            background-color: #f7f3ee;
+            color: #554a43;
+            line-height: 1.8;
+        }
+
+        /* 1. 頂部導覽列 */
+        header {
+            background-color: #b5a494;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            font-size: 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        nav li.active {
+            font-weight: bold;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 3px;
+        }
+
+        nav li span.divider {
+            margin-left: 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 2. 主視覺橫幅：首頁歡迎區 (Hero Profile) */
+        .hero-banner {
+            background: linear-gradient(rgba(247, 243, 238, 0.5), rgba(247, 243, 238, 0.95)),
+                        url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80') center/cover;
+            padding: 70px 20px 50px;
+        }
+
+        .hero-container {
+            max-width: 950px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 45px;
+        }
+
+        .profile-polaroid {
+            background-color: #ffffff;
+            padding: 12px 12px 24px 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-radius: 4px;
+            transform: rotate(-2deg);
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-polaroid:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .profile-polaroid img {
+            width: 220px;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            border-radius: 2px;
+        }
+
+        .profile-polaroid .caption {
+            font-family: 'Caveat', cursive;
+            font-size: 20px;
+            text-align: center;
+            color: #8c7b6d;
+            margin-top: 10px;
+        }
+
+        .hero-intro {
+            flex: 1;
+        }
+
+        .hero-greeting {
+            font-family: 'Caveat', cursive;
+            font-size: 28px;
+            color: #a06b52;
+            margin-bottom: 6px;
+        }
+
+        .hero-intro h1 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 36px;
+            color: #3b322c;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .hero-intro p {
+            font-size: 15.5px;
+            color: #665b53;
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tag {
+            background-color: #ffffff;
+            border: 1px solid #decbc0;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #7b6d61;
+        }
+
+        /* 3. 頁面整體容器 */
+        .container {
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 45px;
+        }
+
+        /* 區塊標題 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 28px;
+            color: #3b322c;
+            letter-spacing: 2px;
+        }
+
+        .section-title span {
+            font-family: 'Caveat', cursive;
+            font-size: 20px;
+            color: #8c7b6d;
+        }
+
+        /* 4. 五大章節導航卡片區 (Portal Cards Grid) */
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+        }
+
+        .portal-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid #ebdcd0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-color: #dec1b0;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            background-color: #faf4ef;
+            color: #a06b52;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            border: 1px solid #ebdcd0;
+        }
+
+        .card-top h3 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 20px;
+            color: #3b322c;
+        }
+
+        .portal-card p {
+            font-size: 14px;
+            color: #6d6055;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-link {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #a06b52;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* 5. 互動迎賓小彩蛋區 */
+        .interaction-box {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 28px 30px;
+            border: 1px dashed #decbc0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .interaction-box h3 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 22px;
+            color: #3b322c;
+            margin-bottom: 8px;
+        }
+
+        .interaction-box p {
+            font-size: 14px;
+            color: #7b6d61;
+            margin-bottom: 18px;
+        }
+
+        .interactive-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .fun-btn {
+            background-color: #faf7f2;
+            border: 1px solid #decbc0;
+            padding: 9px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            color: #554a43;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .fun-btn:hover {
+            background-color: #b58d7c;
+            color: #ffffff;
+            border-color: #b58d7c;
+        }
+
+        #greetToast {
+            margin-top: 14px;
+            font-family: 'Caveat', cursive;
+            font-size: 22px;
+            color: #a06b52;
+            height: 26px;
+        }
+
+        /* 6. 頁尾 */
+        footer {
+            text-align: center;
+            padding: 40px 20px 45px;
+            background-color: #eee7df;
+            margin-top: 50px;
+        }
+
+        footer .quote-en {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #7b6d61;
+            margin-bottom: 4px;
+        }
+
+        /* 建議瀏覽器樣式標籤 */
+        footer .browser-recommend {
+            margin-top: 15px;
+            display: inline-block;
+            background-color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #7b6d61;
+            border: 1px solid #decbc0;
+        }
+
+        /* 手機版 RWD 適應 */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 25px;
+            }
+            .hero-intro p {
+                text-align: center;
+            }
+            .hero-tags {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <header>
+        <div class="logo">♥ Sherry's Website</div>
+        <nav>
+            <ul>
+                <li class="active"><a href="index.html">首頁</a><span class="divider">|</span></li>
+                <li><a href="Resume.html">個人履歷</a><span class="divider">|</span></li>
+                <li><a href="Hobbies.html">興趣專長</a><span class="divider">|</span></li>
+                <li><a href="Activities.html">校園活動</a><span class="divider">|</span></li>
+                <li><a href="Travel.html">旅遊紀錄</a><span class="divider">|</span></li>
+                <li><a href="DreamList.html">夢想清單</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主視覺：個人自我介紹 (Hero Section) -->
+    <section class="hero-banner">
+        <div class="hero-container">
+            <div class="profile-polaroid">
+                <img src="images/index1.jpg" alt="Sherry的個人照片" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80'">
+                <div class="caption">Nice to meet you! ♡</div>
+            </div>
+            <div class="hero-intro">
+                <div class="hero-greeting">Welcome to my space! 🌿</div>
+                <h1>1151640 施宣伊 ・ Sherry</h1>
+                <p>
+                    嗨！我是宣伊，目前就讀於元智大學資訊管理學系。往下流覽解鎖更多...
+                </p>
+                <div class="hero-tags">
+                    <span class="hero-tag">🎓 元智資管</span>
+                    <span class="hero-tag">🎸 吉他</span>
+                    <span class="hero-tag">🧁 手作烘焙</span>
+                    <span class="hero-tag">📷 記錄生活</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要內容區 -->
+    <main class="container">
+
+        <!-- 網站導覽目錄區 -->
+        <section>
+            <div class="section-title">
+                <h2>探索我的日常篇章</h2>
+                <span>Explore My Journey & Stories</span>
+            </div>
+
+            <div class="portal-grid">
+                <!-- 1. 個人履歷 -->
+                <a href="Resume.html" class="portal-card">
+                    <div>
+                        <div class="card-top">
+                            <div class="card-icon">📄</div>
+                            <h3>個人履歷</h3>
+                        </div>
+                        <p>關於我的點點滴滴與學習歷程。</p>
+                    </div>
+                    <div class="card-link">深入認識我的經歷 ➔</div>
+                </a>
+
+                <!-- 2. 興趣專長 -->
+                <a href="Hobbies.html" class="portal-card">
+                    <div>
+                        <div class="card-top">
+                            <div class="card-icon">🎸</div>
+                            <h3>興趣專長</h3>
+                        </div>
+                        <p>來看看我是如何透過音樂、烘焙和攝影，增添生活中的小美好吧！</p>
+                    </div>
+                    <div class="card-link">走進我的愛好角落 ➔</div>
+                </a>
+
+                <!-- 3. 校園活動 -->
+                <a href="Activities.html" class="portal-card">
+                    <div>
+                        <div class="card-top">
+                            <div class="card-icon">🎪</div>
+                            <h3>校園活動</h3>
+                        </div>
+                        <p>新生啟航、國際迎新派對，以及重返青春記憶的制服趴。</p>
+                    </div>
+                    <div class="card-link">回味熱血青春活動 ➔</div>
+                </a>
+
+                <!-- 4. 旅遊紀錄 -->
+                <a href="Travel.html" class="portal-card">
+                    <div>
+                        <div class="card-top">
+                            <div class="card-icon">❄️</div>
+                            <h3>旅遊紀錄</h3>
+                        </div>
+                        <p>漫步日本北陸雪國，走訪白川鄉合掌村、兼六園雪吊、老街飛驒牛與名城巡禮。</p>
+                    </div>
+                    <div class="card-link">翻閱日本雪國手帳 ➔</div>
+                </a>
+
+                <!-- 5. 夢想清單 -->
+                <a href="DreamList.html" class="portal-card">
+                    <div>
+                        <div class="card-top">
+                            <div class="card-icon">🎯</div>
+                            <h3>夢想清單</h3>
+                        </div>
+                        <p>精進資管專業能力、爭取赴外國際交換學生、學習咖啡烘焙與精緻拉花藝術。</p>
+                    </div>
+                    <div class="card-link">查看願望進度清單 ➔</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 訪客互動小彩蛋 -->
+        <section class="interaction-box">
+            <h3>訪客互動手帳 ✨</h3>
+            <p>謝謝你逛到這裡！離開前不妨點擊按鈕，給今天的宣伊打個招呼吧：</p>
+            <div class="interactive-btns">
+                <button class="fun-btn" onclick="sendGreeting('☕ 為今天的自己加油!')">☕ 遞一杯熱咖啡</button>
+                <button class="fun-btn" onclick="sendGreeting('🎸 聽音樂放鬆一下吧～')">🎸 給吉他拍拍手</button>
+                <button class="fun-btn" onclick="sendGreeting('✨ Have a good day. ♡')">✨ 留下一個微笑</button>
+            </div>
+            <div id="greetToast"></div>
+        </section>
+
+    </main>
+
+
+    <!-- 互動小腳本 -->
+    <script>
+        function sendGreeting(msg) {
+            const toast = document.getElementById('greetToast');
+            toast.innerText = msg;
+        }
+    </script>
+</body>
+</html>

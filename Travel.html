@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherry's Website - 旅遊紀錄</title>
+    <!-- 引入手寫風與質感英文字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', Arial, sans-serif;
+            background-color: #f7f3ee;
+            color: #554a43;
+            line-height: 1.8;
+        }
+
+        /* 1. 頂部導覽列 */
+        header {
+            background-color: #b5a494;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            font-size: 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        nav li.active {
+            font-weight: bold;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 3px;
+        }
+
+        nav li span.divider {
+            margin-left: 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 2. 主視覺橫幅 */
+        .banner {
+            background: linear-gradient(rgba(247, 243, 238, 0.45), rgba(247, 243, 238, 0.95)),
+                        url('https://tw.wamazing.com/media/wp-content/uploads/sites/4/2022/09/gasshovillage_eyecatch.jpg.webp') center/cover;
+            text-align: center;
+            padding: 65px 20px 45px;
+        }
+
+        .banner-quote {
+            font-family: 'Caveat', cursive;
+            font-size: 25px;
+            color: #8c7b6d;
+            margin-bottom: 8px;
+        }
+
+        .banner h1 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 40px;
+            letter-spacing: 4px;
+            color: #3b322c;
+            margin-bottom: 6px;
+        }
+
+        .banner h2 {
+            font-size: 14px;
+            letter-spacing: 5px;
+            color: #7b6d61;
+            font-weight: normal;
+            margin-bottom: 12px;
+        }
+
+        .banner p {
+            font-size: 16px;
+            color: #6d6055;
+            letter-spacing: 1px;
+        }
+
+        /* 3. 旅遊總覽小統計 (特色亮點 bar) */
+        .travel-summary-bar {
+            max-width: 950px;
+            margin: -20px auto 35px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 30px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid #eee1d5;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-item .num {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            color: #a06b52;
+            font-weight: bold;
+        }
+
+        .summary-item .label {
+            font-size: 13px;
+            color: #7b6d61;
+        }
+
+        /* 4. 主要容器 */
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        /* 每日旅行卡片*/
+        .day-card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #ebdcd0;
+            position: relative;
+        }
+
+        /* 卡片頭部資訊 */
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #decbc0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .day-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .day-tag {
+            background-color: #b5a494;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .day-title-wrap h3 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 22px;
+            color: #3b322c;
+        }
+
+        .day-meta {
+            text-align: right;
+            font-size: 13px;
+            color: #8c7b6d;
+        }
+
+        .weather-pill {
+            display: inline-block;
+            background-color: #f7f3ee;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-weight: 500;
+            color: #786455;
+            margin-top: 4px;
+        }
+
+        /* 多張照片畫廊 (Photo Grid) */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .photo-item {
+            background-color: #ffffff;
+            padding: 8px 8px 16px 8px;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border: 1px solid #eee4db;
+            transition: transform 0.25s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 2px;
+            display: block;
+        }
+
+        .photo-caption {
+            font-size: 12px;
+            color: #7b6d61;
+            text-align: center;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* 每日文字與 Check-list 左右分欄 */
+        .day-body {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            background-color: #faf7f2;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .day-desc p {
+            font-size: 14.5px;
+            color: #554a43;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+
+        .highlight-box {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ebdcd0;
+        }
+
+        .highlight-box h4 {
+            font-size: 14px;
+            color: #a06b52;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #f1e2d7;
+            padding-bottom: 4px;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+            font-size: 13px;
+            color: #665b53;
+        }
+
+        .highlight-box li {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 手寫標籤 */
+        .handwritten-stamp {
+            position: absolute;
+            right: 30px;
+            bottom: 10px;
+            font-family: 'Caveat', cursive;
+            font-size: 22px;
+            color: #bfaea0;
+        }
+
+        /* 5. 旅程足跡地圖區 */
+        .map-section {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #ebdcd0;
+        }
+
+        .map-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ebdcd0;
+            padding-bottom: 12px;
+        }
+
+        .map-header h3 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 24px;
+            color: #3b322c;
+        }
+
+        .map-header span {
+            font-family: 'Caveat', cursive;
+            font-size: 18px;
+            color: #8c7b6d;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 380px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #ebdcd0;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+		/* 6. 訪客互動旅行手帳留言區 */
+        .interactive-memo-section {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #ebdcd0;
+        }
+
+        .memo-input-box {
+            background-color: #faf7f2;
+            border: 1px dashed #decbc0;
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 25px;
+        }
+
+        .memo-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .memo-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .memo-form-group label {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #7b6d61;
+        }
+
+        .memo-input-box input, 
+        .memo-input-box select, 
+        .memo-input-box textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ebdcd0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            color: #554a43;
+            background-color: #ffffff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .memo-input-box input:focus, 
+        .memo-input-box select:focus, 
+        .memo-input-box textarea:focus {
+            border-color: #b58d7c;
+        }
+
+        .memo-submit-btn {
+            background-color: #b58d7c;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .memo-submit-btn:hover {
+            background-color: #a07867;
+        }
+
+        /* 訪客手帳卡片展示網格 */
+        .memo-cards-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        /* 擬真便條紙樣式 */
+        .sticky-note {
+            background-color: #fffbf0;
+            border: 1px solid #f0e6d2;
+            padding: 20px 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transform: rotate(-1deg);
+            transition: transform 0.2s;
+        }
+
+        .sticky-note:nth-child(even) {
+            transform: rotate(1.5deg);
+            background-color: #f7faf7;
+            border-color: #e2ede2;
+        }
+
+        .sticky-note:hover {
+            transform: translateY(-4px) rotate(0deg);
+        }
+
+        .sticky-note .pin {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+        }
+
+        .sticky-note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #8c7b6d;
+            border-bottom: 1px dashed #ebdcd0;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+
+        .sticky-note-spot {
+            font-weight: bold;
+            color: #b58d7c;
+            font-size: 13.5px;
+            margin-bottom: 6px;
+        }
+
+        .sticky-note-msg {
+            font-size: 13.5px;
+            color: #554a43;
+            line-height: 1.6;
+            word-break: break-all;
+        }
+
+        /* 7. 頁尾 */
+        footer {
+            text-align: center;
+            padding: 40px 20px 50px;
+            background-color: #eee7df;
+            margin-top: 60px;
+        }
+
+        footer .quote-en {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #7b6d61;
+            margin-bottom: 4px;
+        }
+
+        footer .quote-zh {
+            font-size: 14px;
+            color: #7b6d61;
+            margin-bottom: 25px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #554a43;
+            padding: 10px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: background-color 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background-color: #f7f3ee;
+        }
+
+        /* 手機版 RWD 適應 */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .travel-summary-bar {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            .day-body {
+                grid-template-columns: 1fr;
+            }
+            .travel-memo-section {
+                grid-template-columns: 1fr;
+            }
+            .day-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <header>
+        <div class="logo">♥ Sherry's Website</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">首頁</a><span class="divider">|</span></li>
+                <li><a href="Resume.html">個人履歷</a><span class="divider">|</span></li>
+                <li><a href="Hobbies.html">興趣專長</a><span class="divider">|</span></li>
+                <li><a href="Activities.html">校園活動</a><span class="divider">|</span></li>
+                <li class="active"><a href="Travel.html">旅遊紀錄</a><span class="divider">|</span></li>
+                <li><a href="DreamList.html">夢想清單</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主視覺橫幅 -->
+    <section class="banner">
+        <div class="banner-quote">Collect moments, not things. ♡</div>
+        <h1>旅遊紀錄</h1>
+        <h2>TRAVEL DIARY</h2>
+        <p></p>
+    </section>
+
+    <!-- 旅遊小統計 Bar -->
+    <section class="travel-summary-bar">
+        <div class="summary-item">
+            <div class="num">4 Days</div>
+            <div class="label">🗓️ 旅行天數</div>
+        </div>
+        <div class="summary-item">
+            <div class="num">4 Prefectures</div>
+            <div class="label">📍 跨越縣市（愛知/岐阜/石川/富山）</div>
+        </div>
+        <div class="summary-item">
+            <div class="num">-2 °C</div>
+            <div class="label">❄️ 平均溫度</div>
+        </div>
+        <div class="summary-item">
+            <div class="num">100%</div>
+            <div class="label">✨ 好玩程度</div>
+        </div>
+    </section>
+
+    <!-- 主要旅行內容 -->
+    <main class="container">
+
+        <!-- ==================== DAY 1 ==================== -->
+        <article class="day-card">
+            <div class="day-header">
+                <div class="day-title-wrap">
+                    <span class="day-tag">DAY 1</span>
+                    <h3>童話雪國！白川鄉合掌村與郡上古城</h3>
+                </div>
+                <div class="day-meta">
+                    <div>2026.02.04</div>
+                    <span class="weather-pill">❄️ 岐阜縣 ・ 0°C</span>
+                </div>
+            </div>
+
+            <!-- 多張照片畫廊 -->
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="images/D1_1.jpg" alt="食物手作模型" onerror="this.src='https://img.mtkomtko.com/2023/07/IMG_0912.jpeg'">
+                    <div class="photo-caption">郡上八幡手作模型</div>
+                </div>
+                <div class="photo-item">
+                    <img src="images/D1_2.jpg" alt="白川鄉合掌村全景" onerror="this.src='https://tw.wamazing.com/media/wp-content/uploads/sites/4/2022/09/gasshovillage_eyecatch.jpg.webp'">
+                    <div class="photo-caption">白川鄉夢幻合掌屋</div>
+                </div>
+                <div class="photo-item">
+                    <img src="images/D1_3.jpg" alt="白鳥舞" onerror="this.src='https://d4y1bmgncyek9.cloudfront.net/uploads/activity/images/4838/large_b36467de-aed9-47ed-97fb-51cd9b2144b0.jpeg'">
+                    <div class="photo-caption">白鳥舞文化體驗</div>
+                </div>
+            </div>
+
+            <!-- 文字敘述與重點 Highlight -->
+            <div class="day-body">
+                <div class="day-desc">
+                    <p>一早踏入古色古香的「郡上八幡」，這裡以清純的流水與悠久的傳統舞蹈「白鳥舞」聞名。踏著石板小徑，感受江戶城下町的純樸安詳。</p>
+                    <p>午後抵達這趟最期待的重頭戲——「白川鄉合掌村」。當厚實的白雪覆蓋在傳統木造合掌造上，整座村落宛如童話書裡的薑餅屋！站在展望台俯瞰整片銀白仙境，深深被這片大自然的寂靜與壯麗所震撼。</p>
+                </div>
+                <div class="highlight-box">
+                    <h4>✦ 今日亮點 Check</h4>
+                    <ul>
+                        <li>✓ 參觀世界文化遺產合掌造</li>
+                        <li>✓ 欣賞日本傳統白鳥舞</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="handwritten-stamp">Snowy wonderland ♡</div>
+        </article>
+
+        <!-- ==================== DAY 2 ==================== -->
+        <article class="day-card">
+            <div class="day-header">
+                <div class="day-title-wrap">
+                    <span class="day-tag" style="background-color: #9c7c68;">DAY 2</span>
+                    <h3>名園雪吊之美・庄川峽雪見遊覽船</h3>
+                </div>
+                <div class="day-meta">
+                    <div>2026.02.05</div>
+                    <span class="weather-pill">🌨️ 石川 & 富山 ・ 2°C</span>
+                </div>
+            </div>
+
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="images/D2_1.jpg" alt="金澤兼六園雪吊" onerror="this.src='https://centrip-japan.com/article/img/1605/kanazawa_02.webp'">
+                    <div class="photo-caption">兼六園冬日雪吊</div>
+                </div>
+                <div class="photo-item">
+                    <img src="images/D2_2.jpg" alt="庄川峽遊覽船" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80'">
+                    <div class="photo-caption">庄川峽山水遊船</div>
+                </div>
+                <div class="photo-item">
+                    <img src="images/D2_3.jpg" alt="三井 Outlet 購物" onerror="this.src='https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=500&q=80'">
+                    <div class="photo-caption">小矢部 Outlet 逛街</div>
+                </div>
+            </div>
+
+            <div class="day-body">
+                <div class="day-desc">
+                    <p>來到日本三大名園之首的金澤「兼六園」。冬季最具代表性的景象便是為了保護松樹免於積雪壓垮而搭建的「雪吊（ゆきづり）」，對稱優美的錐形線條搭配庭園殘雪，展現極致的日式枯寂美學。</p>
+                    <p>下午前往富山搭乘「庄川峽遊覽船」，平靜如鏡的墨綠色湖面倒映著兩旁被白雪覆蓋的巍峨山壁，彷彿一幅緩緩展開的水墨山水畫。回程在小矢部三井 Outlet 盡情淘寶購物，非常充實！</p>
+                </div>
+                <div class="highlight-box">
+                    <h4>✦ 今日亮點 Check</h4>
+                    <ul>
+                        <li>✓ 打卡日本三大名園兼六園</li>
+                        <li>✓ 庄川峽悠閒破冰船體驗</li>
+                        <li>✓ 購買北陸限定伴手禮</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="handwritten-stamp">Quiet & peaceful ♡</div>
+        </article>
+
+        <!-- ==================== DAY 3 ==================== -->
+        <article class="day-card">
+            <div class="day-header">
+                <div class="day-title-wrap">
+                    <span class="day-tag" style="background-color: #8c7b6d;">DAY 3</span>
+                    <h3>漫步飛驒小京都・牧歌之里玩雪趣</h3>
+                </div>
+                <div class="day-meta">
+                    <div>2026.02.06</div>
+                    <span class="weather-pill">⛅ 飛驒高山 ・ -1°C</span>
+                </div>
+            </div>
+
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="images/D3_1.jpg" alt="飛驒高山老街" onerror="this.src='https://cdn.jeepe.jp/uploads/public_image/image/902/normal_webp_aea04c69-02d5-4d6a-a4f9-ecfb7890b7ab.webp'">
+                    <div class="photo-caption">上三之町町家老街</div>
+                </div>
+                <div class="photo-item">
+                    <img src="images/D3_2.jpg" alt="美味飛驒牛串燒" onerror="this.src='https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80'">
+                    <div class="photo-caption">入口即化的飛驒牛</div>
+                </div>
+                <div class="photo-item">
+                    <img src="images/D3_3.jpg" alt="牧歌之里雪原" onerror="this.src='https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=500&q=80'">
+                    <div class="photo-caption">牧歌之里雪地樂園</div>
+                </div>
+            </div>
+
+            <div class="day-body">
+                <div class="day-desc">
+                    <p>早上穿梭在被譽為「小京都」的「飛驒高山上三之町」，兩側皆是典雅厚重的黑色木造格子窗町家建築。邊散步邊品嚐排隊名物「A5 飛驒牛握壽司」與現烤串燒，牛肉油脂與醋飯在嘴裡化開，幸福感爆棚！</p>
+                    <p>接著前往標高千公尺的高原農場「牧歌之里」，冬天搖身一變成為天然雪地樂園。在鬆軟厚實的粉雪中打雪仗、堆雪人，還遇見了親人的草泥馬與小馬，身心靈都被徹底療癒。</p>
+                </div>
+                <div class="highlight-box">
+                    <h4>✦ 今日亮點 Check</h4>
+                    <ul>
+                        <li>✓ 必吃超銷魂飛驒牛料理</li>
+                        <li>✓ 木造老街買手作伴手禮</li>
+                        <li>✓ 牧歌之里體驗雪盆滑雪</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="handwritten-stamp">Delicious & joyful ♡</div>
+        </article>
+
+        <!-- ==================== DAY 4 ==================== -->
+        <article class="day-card">
+            <div class="day-header">
+                <div class="day-title-wrap">
+                    <span class="day-tag" style="background-color: #7d8b82;">DAY 4</span>
+                    <h3>名城金鯱雄風・鮮蝦仙貝大採購</h3>
+                </div>
+                <div class="day-meta">
+                    <div>2026.02.07</div>
+                    <span class="weather-pill">☀️ 名古屋市 ・ 5°C</span>
+                </div>
+            </div>
+
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="images/D4_1.jpg" alt="名古屋城金鯱" onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Nagoya_Castle_7.jpg/960px-Nagoya_Castle_7.jpg?utm_source=zh.wikipedia.org&utm_campaign=parser&utm_content=thumbnail'">
+                    <div class="photo-caption">威武壯觀名古屋城</div>
+                </div>
+                <div class="photo-item">
+                    <img src="images/D4_2.jpg" alt="蝦仙貝之里" onerror="this.src='https://bobbytravel.tw/wp-content/uploads/2024/10/20241029141402_0_8b371c.jpg'">
+                    <div class="photo-caption">蝦仙貝之里滿滿戰利品</div>
+                </div>
+                <div class="photo-item">
+                    <img src="images/D4_3.jpg" alt="常滑永旺夢樂城招財貓" onerror="this.src='https://img.letsgojp.com/2024/01/AEONTN_870.jpg'">
+                    <div class="photo-caption">常滑 AEON 巨型招財貓</div>
+                </div>
+            </div>
+
+            <div class="day-body">
+                <div class="day-desc">
+                    <p>旅途最後一日來到愛知縣核心「名古屋城」。仰望天守閣頂端閃耀奪目的金色海獸「金鯱（金シャチ）」，感受戰國德川家康時代的雄霸氣勢與歷史風華。</p>
+                    <p>接著抵達老饕必訪的「蝦仙貝之里（えびせんべいの里）」，現場試吃了幾十種口味現炸仙貝，手提滿滿一袋袋綜合蝦餅！最後到離機場超近的「常滑永旺夢樂城 AEON」打卡巨大招財貓，這段旅程也悄悄來到尾聲...</p>
+                </div>
+                <div class="highlight-box">
+                    <h4>✦ 今日亮點 Check</h4>
+                    <ul>
+                        <li>✓ 參觀名將德川家康之城</li>
+                        <li>✓ 買爆蝦仙貝之里綜合仙貝</li>
+                        <li>✓ 和常滑巨型招財貓合影</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="handwritten-stamp">Best trip ever ♡</div>
+        </article>
+
+        <!-- ==================== 嵌入地圖專區 ==================== -->
+        <section class="map-section">
+            <div class="map-header">
+                <div style="font-size: 26px;">🗺️</div>
+                <div>
+                    <h3>旅程足跡地圖</h3>
+                    <span>Route & Locations Map</span>
+                </div>
+            </div>
+            <p style="font-size: 14px; color: #665b53; margin-bottom: 15px;">
+                📍 走訪路線：岐阜縣（郡上八幡、合掌村）➔ 石川縣（金澤兼六園）➔ 富山縣（庄川峽）➔ 飛驒高山 ➔ 愛知縣（名古屋城、常滑）
+            </p>
+            <div class="map-container">
+                <!-- 嵌入 Google Maps 白川鄉與中部北陸中心點 -->
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102927.42080393278!2d136.8374026369041!3d36.25642879590892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff813735041ff91%3A0x67dbad9d5b410940!2z55m95bed6YSJ5ZCI5o6M5p2R!5e0!3m2!1szh-TW!2stw!4v1710000000000!5m2!1szh-TW!2stw" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- ==================== 訪客旅行手帳留言互動區 ==================== -->
+        <section class="interactive-memo-section">
+            <div class="map-header">
+                <div style="font-size: 26px;">✍️</div>
+                <div>
+                    <h3>旅人筆記・你最心動哪一部分？</h3>
+                    <span>Traveler's Impression Note</span>
+                </div>
+            </div>
+            <p style="font-size: 14px; color: #665b53; margin-bottom: 15px;">
+                看完這趟日本北陸雪國之旅，哪一個景點或體驗最吸引你呢？歡迎留下你的名字與最喜歡的瞬間！
+            </p>
+
+            <!-- 輸入表單 -->
+            <div class="memo-input-box">
+                <div class="memo-form-grid">
+                    <div class="memo-form-group">
+                        <label for="visitorName">你的名字 / 暱稱：</label>
+                        <input type="text" id="visitorName" placeholder="例如：小明、好朋友">
+                    </div>
+                    <div class="memo-form-group">
+                        <label for="favoriteSpot">最吸引你的行程：</label>
+                        <select id="favoriteSpot">
+                            <option value="白川鄉合掌村（童話薑餅屋）">❄️ 白川鄉合掌村（童話薑餅屋）</option>
+                            <option value="金澤兼六園（冬日雪吊庭園）">🌿 金澤兼六園（冬日雪吊庭園）</option>
+                            <option value="庄川峽遊覽船（水墨雪景）">🛶 庄川峽遊覽船（水墨雪景）</option>
+                            <option value="飛驒高山老街（吃飛驒牛）">🥩 飛驒高山老街（吃飛驒牛）</option>
+                            <option value="牧歌之里（雪地玩雪樂園）">⛄ 牧歌之里（雪地玩雪樂園）</option>
+                            <option value="名古屋城 & 蝦仙貝之里">🏯 名古屋城 & 蝦仙貝之里</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="memo-form-group" style="margin-bottom: 15px;">
+                    <label for="visitorComment">想說的話 / 最喜歡的理由：</label>
+                    <textarea id="visitorComment" rows="3" placeholder="例如：雪中的合掌村看起來真的太夢幻了！下次也想去吃飛驒牛串燒～"></textarea>
+                </div>
+                <button type="button" class="memo-submit-btn" onclick="addMemo()">📌 貼上手帳便條</button>
+            </div>
+
+            <!-- 便條紙展示區 -->
+            <div class="memo-cards-display" id="memoContainer">
+                <!-- 預設便條 1 -->
+                <div class="sticky-note">
+                    <div class="pin">📌</div>
+                    <div class="sticky-note-header">
+                        <span>來自：Sherry</span>
+                        <span>精選</span>
+                    </div>
+                    <div class="sticky-note-spot">❄️ 白川鄉合掌村</div>
+                    <div class="sticky-note-msg">冬天的合掌村積雪厚厚一層，現場親眼看到真的會感動到起雞皮疙瘩，就像走進童話繪本一樣！</div>
+                </div>
+
+                <!-- 預設便條 2 -->
+                <div class="sticky-note">
+                    <div class="pin">📌</div>
+                    <div class="sticky-note-header">
+                        <span>來自：猜猜我是誰</span>
+                        <span>訪客</span>
+                    </div>
+                    <div class="sticky-note-spot">🥩 飛驒高山老街</div>
+                    <div class="sticky-note-msg">在上三之町老街吃到的現烤飛驒牛串燒跟炙燒壽司完全驚艷，香氣留在記憶裡好久～</div>
+                </div>
+            </div>
+        </section>
+
+    <!-- 底部資訊 -->
+    <footer>
+        <div class="quote-en">Life is better when you do what you love.</div>
+        <a href="#" class="back-home-btn">⌂ 返回頂部</a>
+    </footer>
+
+	<!-- 訪客手帳互動腳本 -->
+    <script>
+        function addMemo() {
+            const nameInput = document.getElementById('visitorName');
+            const spotInput = document.getElementById('favoriteSpot');
+            const commentInput = document.getElementById('visitorComment');
+            const container = document.getElementById('memoContainer');
+
+            const name = nameInput.value.trim() || '匿名旅人';
+            const spot = spotInput.value;
+            const comment = commentInput.value.trim();
+
+            if (!comment) {
+                alert('請填寫想說的話或心得再貼上手帳唷！♡');
+                return;
+            }
+
+            // 建立新的便條紙元素
+            const newNote = document.createElement('div');
+            newNote.className = 'sticky-note';
+            
+            // 取得當前時間
+            const now = new Date();
+            const dateStr = `${now.getMonth() + 1}/${now.getDate()}`;
+
+            newNote.innerHTML = `
+                <div class="pin">📌</div>
+                <div class="sticky-note-header">
+                    <span>來自：${name}</span>
+                    <span>${dateStr}</span>
+                </div>
+                <div class="sticky-note-spot">✦ ${spot}</div>
+                <div class="sticky-note-msg">${comment}</div>
+            `;
+
+            // 將新便條插到最前面
+            container.insertBefore(newNote, container.firstChild);
+
+            // 清空輸入欄位
+            nameInput.value = '';
+            commentInput.value = '';
+
+            alert('便條已經成功貼上手帳囉！✨');
+        }
+    </script>
+</body>
+</html>
+</body>
+</html>

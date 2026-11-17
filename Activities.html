@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherry's Website - 校園活動</title>
+    <!-- 引入手寫風與質感英文字體 -->
+    <link href="https://fonts.googlea pis.com/css2?family=Caveat:wght@600&family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+		@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+
+	
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', Arial, sans-serif;
+            background-color: #f7f3ee;
+            color: #554a43;
+            line-height: 1.8;
+        }
+
+        /* 1. 頂部導覽列 */
+        header {
+            background-color: #b5a494;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: 'Caveat', cursive !important;
+			font-size: 26px !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            font-size: 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        nav li.active {
+            font-weight: bold;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 3px;
+        }
+
+        nav li span.divider {
+            margin-left: 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+		
+		/* 讓導覽列中的超連結文字保持白色，並去掉預設藍色底線 */
+		nav ul li a {
+		color: #ffffff;
+		text-decoration: none;
+		transition: opacity 0.2s;
+		}
+
+		/* 滑鼠移過去時稍微變半透明，增加點擊感 */
+		nav ul li a:hover {
+			opacity: 0.8;
+		}
+
+        /* 2. 主視覺橫幅 (Hero Banner) */
+        .banner {
+            background: linear-gradient(rgba(247, 243, 238, 0.4), rgba(247, 243, 238, 0.9)),
+                        url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1200&q=80') center/cover;
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .banner-quote {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #8c7b6d;
+            margin-bottom: 10px;
+        }
+
+        .banner h1 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 38px;
+            letter-spacing: 4px;
+            color: #3b322c;
+            margin-bottom: 5px;
+        }
+
+        .banner h2 {
+            font-size: 14px;
+            letter-spacing: 5px;
+            color: #7b6d61;
+            font-weight: normal;
+            margin-bottom: 12px;
+        }
+
+        .banner p {
+            font-size: 16px;
+            color: #6d6055;
+            letter-spacing: 1px;
+        }
+
+        /* 3. 活動卡片展示區 */
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .activity-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+
+        /* 拍立得照片風外框 */
+        .card-img-wrapper {
+            background-color: #ffffff;
+            padding: 10px 10px 18px 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .card-img-wrapper img {
+            width: 250px;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            border-radius: 2px;
+        }
+
+        /* 文字內容排版 */
+        .card-content {
+            flex: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #ebdcd0;
+            padding-bottom: 10px;
+        }
+
+        .title-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            background-color: #b58d7c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        .title-text h3 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 24px;
+            color: #3b322c;
+            line-height: 1.2;
+        }
+
+        .title-text span {
+            font-family: 'Caveat', cursive;
+            font-size: 18px;
+            color: #8c7b6d;
+        }
+
+        .badge {
+            background-color: #eee7df;
+            color: #6e5f53;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .slogan {
+            font-weight: 500;
+            color: #a06b52;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .desc {
+            font-size: 14.5px;
+            color: #665b53;
+            text-align: justify;
+        }
+
+        /* 右下角手寫小字 */
+        .handwritten {
+            position: absolute;
+            right: 25px;
+            bottom: 15px;
+            font-family: 'Caveat', cursive;
+            font-size: 20px;
+            color: #ab9585;
+            text-align: right;
+            line-height: 1.1;
+        }
+
+        /* 4. 底部頁尾與回首頁按鈕 */
+        footer {
+            text-align: center;
+            padding: 40px 20px 50px;
+            background-color: #eee7df;
+            margin-top: 50px;
+        }
+
+        footer .quote-en {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #7b6d61;
+            margin-bottom: 4px;
+        }
+
+        footer .quote-zh {
+            font-size: 14px;
+            color: #7b6d61;
+            margin-bottom: 25px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #554a43;
+            padding: 10px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: background-color 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background-color: #f7f3ee;
+        }
+
+        /* 手機版適應 (RWD) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .activity-card {
+                flex-direction: column;
+                text-align: left;
+            }
+            .card-img-wrapper img {
+                width: 100%;
+                height: 200px;
+            }
+            .handwritten {
+                position: static;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <header>
+        <div class="logo" style="font-family: 'Caveat', cursive; font-size: 26px;">♥ Sherry's Website</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">首頁</a><span class="divider">|</span></li>
+                <li><a href="Resume.html">個人履歷</a><span class="divider">|</span></li>
+                <li><a href="Hobbies.html">興趣專長</a><span class="divider">|</span></li>
+                <li class="active"><a href="Activities.html">校園活動</a><span class="divider">|</span></li>
+                <li><a href="Travel.html">旅遊紀錄</a><span class="divider">|</span></li>
+                <li><a href="Dreamlist.html">夢想清單</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主視覺橫幅 -->
+    <section class="banner">
+        <div class="banner-quote">Every experience shapes who we are. ♡</div>
+        <h1>校園活動</h1>
+        <h2>CAMPUS ACTIVITIES</h2>
+        <p></p>
+    </section>
+
+    <!-- 活動內容卡片區 -->
+    <main class="container">
+
+        <!-- 1. 新生啟航 -->
+        <article class="activity-card">
+            <div class="card-img-wrapper">
+                <img src="images/activities1.jpg" alt="新生啟航活動照片">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle">⛵</div>
+                        <div class="title-text">
+                            <h3>新生啟航</h3>
+                            <span>Freshman Orientation</span>
+                        </div>
+                    </div>
+                    <span class="badge">🌟</span>
+                </div>
+                <p class="slogan">「帶領初來乍到的你們，勇敢駛向大學的汪洋。」</p>
+                <p class="desc">
+                    參與新生啟航，從了解校園生活到學校課程，以及與系上一同參與校歌比賽，增加凝聚力。讓我逐漸適應大學生活。
+                </p>
+            </div>
+            <div class="handwritten">New beginnings<br>better together ♡</div>
+        </article>
+
+        <!-- 2. 國際新生交流派對 -->
+        <article class="activity-card">
+            <div class="card-img-wrapper">
+                <img src="images/activities2.jpg" alt="國際新生交流派對照片">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle" style="background-color: #7d8b82;">🌏</div>
+                        <div class="title-text">
+                            <h3>國際新生交流派對</h3>
+                            <span>International Welcome Party</span>
+                        </div>
+                    </div>
+                    <span class="badge">🎉</span>
+                </div>
+                <p class="slogan">「打破語言界線，用笑容搭起世界的橋樑。」</p>
+                <p class="desc">
+                    與來自世界各地的國際生相聚一堂。活動中不僅體驗了不同國家的文化特色與熱情互動，更在全英文的對話氛圍中挑戰自我、開拓視野。
+                </p>
+            </div>
+            <div class="handwritten">Global friends<br>♡</div>
+        </article>
+
+        <!-- 3. 制服趴 -->
+        <article class="activity-card">
+            <div class="card-img-wrapper">
+                <img src="images/activities3.jpg" alt="制服趴活動照片">
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="title-group">
+                        <div class="icon-circle" style="background-color: #b8866d;">👔</div>
+                        <div class="title-text">
+                            <h3>制服趴</h3>
+                            <span>Uniform Party</span>
+                        </div>
+                    </div>
+                    <span class="badge">🎈</span>
+                </div>
+                <p class="slogan">「穿上熟悉的高中制服，重溫無憂無慮的青春時光。」</p>
+                <p class="desc">
+                    再次穿起曾經陪伴三年的高中制服，過往回憶席捲而來。與不同科系的朋友一起組隊破關，最後的潑水大戰，也讓我們在課業壓力外得到紓壓，非常好玩!
+                </p>
+            </div>
+            <div class="handwritten">Youth moments<br>forever ♡</div>
+        </article>
+
+    </main>
+
+    <!-- 底部資訊 -->
+    <footer>
+        <div class="quote-en">Life is better when you do what you love.</div>
+       
+        <a href="#" class="back-home-btn">⌂ 返回頂部</a>
+    </footer>
+
+</body>
+</html>

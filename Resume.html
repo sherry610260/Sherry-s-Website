@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherry's Website - 個人履歷</title>
+    <!-- 引入手寫風與質感字體（與 Hobbies 相同） -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', Arial, sans-serif;
+            background-color: #f7f3ee;
+            color: #554a43;
+            line-height: 1.8;
+        }
+
+        /* 1. 頂部導覽列 */
+        header {
+            background-color: #b5a494;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 40px;
+            color: #ffffff;
+        }
+
+        .logo {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            font-size: 15px;
+        }
+
+        nav li {
+            cursor: pointer;
+        }
+
+        nav li.active {
+            font-weight: bold;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 3px;
+        }
+
+        nav li span.divider {
+            margin-left: 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 2. 主視覺橫幅 (Hero Banner) */
+        .banner {
+            background: linear-gradient(rgba(247, 243, 238, 0.4), rgba(247, 243, 238, 0.9)),
+                        url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80') center/cover;
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .banner-quote {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #8c7b6d;
+            margin-bottom: 10px;
+        }
+
+        .banner h1 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 38px;
+            letter-spacing: 4px;
+            color: #3b322c;
+            margin-bottom: 5px;
+        }
+
+        .banner h2 {
+            font-size: 14px;
+            letter-spacing: 5px;
+            color: #7b6d61;
+            font-weight: normal;
+            margin-bottom: 12px;
+        }
+
+        .banner p {
+            font-size: 16px;
+            color: #6d6055;
+            letter-spacing: 1px;
+        }
+
+        /* 3. 履歷表格主體區 */
+        .content-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        table {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        td, th {
+            border: 1px solid #ebdcd0;
+            padding: 14px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f5ebe6;
+            color: #4a3f35;
+        }
+
+        .resume-title-header {
+            background-color: #b5a494;
+            color: #ffffff;
+            font-size: 18px;
+            letter-spacing: 2px;
+            padding: 16px;
+        }
+
+        .section {
+            background-color: #faf4ef;
+            font-weight: bold;
+            color: #554a43;
+            font-size: 16px;
+        }
+		
+        .left-side {
+            display: inline-block;
+            text-align: left;
+            padding-left: 20px;
+            line-height: 2;
+        }
+
+        .photo-cell img {
+            border-radius: 6px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        a {
+            color: #a06b52;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* 4. 底部頁尾與回首頁按鈕 */
+        footer {
+            text-align: center;
+            padding: 40px 20px 50px;
+            background-color: #eee7df;
+            margin-top: 50px;
+        }
+
+        footer .quote-en {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #7b6d61;
+            margin-bottom: 4px;
+        }
+
+        footer .quote-zh {
+            font-size: 14px;
+            color: #7b6d61;
+            margin-bottom: 25px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #554a43;
+            padding: 10px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: background-color 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background-color: #f7f3ee;
+        }
+
+        /* 手機版適應 */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .content-container {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 頂部導覽列 -->
+    <header>
+        <div class="logo">♥ Sherry's Website</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">首頁</a><span class="divider">|</span></li>
+                <li class="active"><a href="Resume.html">個人履歷</a><span class="divider">|</span></li>
+                <li><a href="Hobbies.html">興趣專長</a><span class="divider">|</span></li>
+                <li><a href="Activities.html">校園活動</a><span class="divider">|</span></li>
+                <li><a href="Travel.html">旅遊紀錄</a><span class="divider">|</span></li>
+                <li><a href="Dreamlist.html">夢想清單</a></li>
+            </ul>
+        </nav>
+    </header>
+	
+
+    <!-- 主視覺橫幅 -->
+    <section class="banner">
+        <div class="banner-quote">Every step forward is a part of who I am. ♡</div>
+        <h1>個人履歷</h1>
+        <h2>PERSONAL RESUME</h2>
+        <p></p>
+    </section>
+
+    <!-- 履歷內容區塊 -->
+    <main class="content-container">
+        <table>
+            <tr>
+                <th colspan="3" class="resume-title-header">PERSONAL RESUME</th>
+            </tr>
+
+            <tr>
+                <th rowspan="4" class="photo-cell">
+                    <img src="images/ID_photo.jpg" width="140" alt="證件照">
+                </th>
+                <th>姓名</th>
+                <td>施宣伊</td>
+            </tr>
+
+            <tr>
+                <th>就讀學校</th>
+                <td>元智大學</td>
+            </tr>
+
+            <tr>
+                <th>就讀科系</th>
+                <td>資訊管理學系</td>
+            </tr>
+
+            <tr>
+                <th>電子郵件</th>
+                <td><a href="mailto:s1151640@g.yzu.edu.tw">s1151640@g.yzu.edu.tw</a></td>
+            </tr>
+            
+            <tr>
+                <th class="section" colspan="3">幹部經歷</th>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <ul class="left-side">
+                        <li>資管系系排球經</li>
+                        <li>全校司儀</li>
+                        <li>社團聯合會副主席</li>
+                        <li>吉他社社長</li>
+                    </ul>	
+                </td>			
+            </tr>
+            
+            <tr>
+                <th class="section" colspan="3">競賽參與</th>
+            </tr>
+
+            <tr>
+                <td colspan="3" style="line-height: 2;">
+                    元智大學 英語朗讀競賽中階組 第一名<br>
+                    彰化縣國語文競賽 國語文朗讀組 第四名<br>
+                    精誠高中 國語文朗讀組 第一名<br>
+                    ZEPRO全國半程馬拉松10公里組 完賽<br>
+                    藏書票版畫展 票選人氣作品 佳作
+                </td>
+            </tr>
+
+            <tr>
+                <th class="section" colspan="3">特殊活動參與</th>
+            </tr>
+
+            <tr>
+                <td colspan="3" style="line-height: 2;">
+                    <p>撰寫青年百億圓夢計畫 未通過</p>
+                    <p>通過國合會見習日記選拔 初選</p>
+                    <p>彰化師範大學高中物理科學人才培育計畫</p>
+                    <p>精誠高中 資訊培訓</p>
+                    <p>精誠高中 畢業晚會表演團體</p>
+                </td>
+            </tr>
+        </table>
+    </main>
+
+    <!-- 底部資訊 -->
+    <footer>
+        <div class="quote-en">Life is better when you do what you love.</div>
+        <a href="#" class="back-home-btn">⌂ 返回頂部</a>
+    </footer>
+
+</body>
+</html>
